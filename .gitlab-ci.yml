@@ -1,0 +1,40 @@
+image: microsoft/dotnet:2.1-sdk-alpine
+
+stages:
+- test
+- pack
+- publish
+
+test:
+  stage: test
+  tags:
+  - docker
+  script:
+  - dotnet restore
+  - dotnet build --no-restore
+  - dotnet test tests/HttpClient.Extensions.Tests/HttpClient.Extensions.Tests.csproj --no-build
+
+pack:
+  stage: pack
+  tags:
+  - docker
+  script:
+  - dotnet pack -c Release -o ../../dist /p:Version=$CI_COMMIT_REF_NAME
+  artifacts:
+    name: nugets
+    paths:
+    - dist/
+  only:
+  - tags
+
+publish:
+  stage: publish
+  tags:
+  - docker
+  dependencies:
+  - pack
+  script:
+  - dotnet nuget push dist/*.nupkg -k $NUGET_API_KEY -s $NUGET_SOURCE
+  only:
+  - tags
+  when: manual
