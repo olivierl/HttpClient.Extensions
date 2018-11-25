@@ -1,3 +1,3 @@
-[![Build Status](https://dev.azure.com/capraibex/OpenSource/_apis/build/status/HttpClient.Extensions)](https://dev.azure.com/capraibex/OpenSource/_build/latest?definitionId=24)
+[![pipeline status](https://gitlab.com/olivierl/httpclient-extentions/badges/master/pipeline.svg)](https://gitlab.com/olivierl/httpclient-extentions/commits/master)
 
 # HttpClient.Extensions
